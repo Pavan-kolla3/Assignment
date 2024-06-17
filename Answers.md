@@ -148,14 +148,19 @@ select * from Orders
 --Question-12:
 --Calculate and update the number of orders placed by each customer in the "Customers" table:
 --Query:
-SELECT c.CustomerID, c.FirstName, c.LastName, COUNT(od.Quantity) AS NumOrders
-FROM Customers c
-LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
-inner join OrderDetails od on od.OrderID=o.OrderID
-GROUP BY c.CustomerID, c.FirstName, c.LastName;
+alter table Customers
+add orderCount int
+update Customers
+set orderCount  = (
+select COUNT(*)
+from Orders
+where Orders.CustomerID = Customers.CustomerID
+)
+
+select * from Customers
 ```
 
-![alt text](q-12.png)
+![alt text](<Screenshot 2024-06-17 095932.png>)
 
 ```sql
 --Question-13:
